@@ -25,13 +25,13 @@ export const getPosts = async (): Promise<Post[]> => {
 };
 
 export const getTodos = async (): Promise<Todo[]> => {
-  return await fetch(`${BASE_URL}/posts`).then(
+  return await fetch(`${BASE_URL}/todos`).then(
     async (response) => (await response.json()) as Todo[],
   );
 };
 
 export const getUsers = async (): Promise<User[]> => {
-  return await fetch(`${BASE_URL}/posts`).then(
+  return await fetch(`${BASE_URL}/users`).then(
     async (response) => (await response.json()) as User[],
   );
 };
