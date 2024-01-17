@@ -1,27 +1,16 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { Album } from "@/types/albums";
+import useSWRImmutable from "swr/immutable";
 import { getAlbums } from "@/lib";
 
-export const getServerSideProps = (async () => {
-  const albums = await getAlbums();
-  return {
-    props: {
-      albums,
-    },
-  };
-}) satisfies GetServerSideProps<{ albums: Album[] }>;
-
-export default function Albums({
-  albums,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Albums() {
+  const { data, isLoading } = useSWRImmutable(
+    "albums",
+    async () => await getAlbums(),
+  );
+  if (isLoading) return <p>Loading...</p>;
   return (
     <>
       <h1>Albums</h1>
-      <ul>
-        {albums.map((album) => (
-          <li key={album.id}>{album.title}</li>
-        ))}
-      </ul>
+      <ul>{data?.map((album) => <li key={album.id}>{album.title}</li>)}</ul>
     </>
   );
 }
