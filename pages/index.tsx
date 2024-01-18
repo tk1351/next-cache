@@ -1,14 +1,11 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import { Inter } from "next/font/google";
 import useSWRImmutable from "swr/immutable";
 import styles from "@/styles/Home.module.css";
 import { BASE_ROUTES } from "@/const/routes";
 import { getAlbums, getUsers } from "@/lib";
 import { User } from "@/types/users";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const getServerSideProps = (async () => {
   const users = await getUsers();
@@ -35,7 +32,7 @@ export default function Home({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
+      <main className={`${styles.main}`}>
         <nav>
           <ul>
             {BASE_ROUTES.map(({ href, label }) => (

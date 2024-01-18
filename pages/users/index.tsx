@@ -17,9 +17,11 @@ export default function Users({
   return (
     <>
       <h1>Users</h1>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
-      ))}
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
     </>
   );
 }
