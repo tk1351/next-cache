@@ -1,12 +1,34 @@
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { Inter } from "next/font/google";
+import { useQuery } from "@tanstack/react-query";
 import styles from "@/styles/Home.module.css";
 import { BASE_ROUTES } from "@/const/routes";
+import { getAlbums, getUsers } from "@/lib";
+import { User } from "@/types/users";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export const getServerSideProps = (async () => {
+  const users = await getUsers();
+  return {
+    props: {
+      users,
+    },
+  };
+}) satisfies GetServerSideProps<{ users: User[] }>;
+
+export default function Home({
+  users,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const { data, isLoading } = useQuery({
+    queryKey: ["albums"],
+    queryFn: async () => await getAlbums(),
+    staleTime: Infinity,
+  });
+
+  if (isLoading) return <p>Loading...</p>;
   return (
     <>
       <Head>
@@ -25,6 +47,7 @@ export default function Home() {
             ))}
           </ul>
         </nav>
+        <ul>{data?.map((album) => <li key={album.id}>{album.title}</li>)}</ul>
       </main>
     </>
   );
