@@ -17,9 +17,11 @@ export default function Todos({
   return (
     <>
       <h1>Todos</h1>
-      {todos.map((todo) => (
-        <li key={todo.id}>{todo.title}</li>
-      ))}
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>{todo.title}</li>
+        ))}
+      </ul>
     </>
   );
 }
