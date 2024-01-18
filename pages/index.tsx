@@ -42,7 +42,9 @@ export default function Home({
             ))}
           </ul>
         </nav>
-        <ul>{data?.map((album) => <li key={album.id}>{album.title}</li>)}</ul>
+        <ul data-testid="swr-list">
+          {data?.map((album) => <li key={album.id}>{album.title}</li>)}
+        </ul>
         <ul>
           {users.map((user) => (
             <li key={user.id}>{user.name}</li>
